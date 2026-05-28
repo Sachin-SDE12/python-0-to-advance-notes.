@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 0 to Advanced – Complete Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0d13;
+  --surface: #11141f;
+  --card: #161a27;
+  --border: #1f2438;
+  --py-blue: #4b8bbe;
+  --py-yellow: #ffd43b;
+  --green: #4ade80;
+  --pink: #f472b6;
+  --purple: #a78bfa;
+  --orange: #fb923c;
+  --cyan: #22d3ee;
+  --red: #f87171;
+  --text: #dde3f0;
+  --muted: #6b7594;
+  --code-bg: #080a10;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+/* ─── HERO ─── */
+.hero {
+  text-align: center;
+  padding: 60px 20px 50px;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(75,139,190,.18) 0%, transparent 70%),
+              radial-gradient(ellipse 40% 40% at 80% 100%, rgba(167,139,250,.08) 0%, transparent 60%);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.hero-snake { font-size: 72px; display: block; margin-bottom: 10px; animation: bob 3s ease-in-out infinite; }
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.hero h1 { font-size: clamp(30px,7vw,58px); font-weight: 800; letter-spacing: -1px; }
+.grad-text { background: linear-gradient(120deg, var(--py-yellow) 0%, var(--py-blue) 60%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero-sub { color: var(--muted); margin-top: 8px; font-size: 15px; font-weight: 300; }
+.badges { display:flex; gap:8px; justify-content:center; margin-top:18px; flex-wrap:wrap; }
+.badge { padding:4px 14px; border-radius:99px; font-size:12px; font-weight:600; }
+.badge-b { background:rgba(74,222,128,.1); border:1px solid rgba(74,222,128,.3); color:var(--green); }
+.badge-i { background:rgba(251,146,60,.1); border:1px solid rgba(251,146,60,.3); color:var(--orange); }
+.badge-a { background:rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.3); color:var(--purple); }
+
+/* ─── STICKY NAV ─── */
+.toc {
+  position: sticky; top:0; z-index:200;
+  background: rgba(11,13,19,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+}
+.toc::-webkit-scrollbar { display:none; }
+.toc-inner { display:inline-flex; gap:2px; padding:8px 0; }
+.toc a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--muted);
+  transition: all .18s;
+  white-space: nowrap;
+}
+.toc a:hover { background: rgba(255,255,255,.06); color: var(--text); }
+
+/* ─── LAYOUT ─── */
+.main { max-width:900px; margin:0 auto; padding:36px 16px 80px; }
+
+/* ─── LEVEL BANNERS ─── */
+.level-banner {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 36px 0 24px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.level-beginner { background:rgba(74,222,128,.07); border:1px solid rgba(74,222,128,.2); color:var(--green); }
+.level-intermediate { background:rgba(251,146,60,.07); border:1px solid rgba(251,146,60,.2); color:var(--orange); }
+.level-advanced { background:rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.2); color:var(--purple); }
+.level-dot { width:8px; height:8px; border-radius:50%; background:currentColor; }
+
+/* ─── SECTION ─── */
+.section { scroll-margin-top:70px; margin-bottom:40px; }
+.sec-head {
+  display:flex; align-items:center; gap:12px;
+  padding-bottom:12px; border-bottom:1px solid var(--border);
+  margin-bottom:18px;
+}
+.sec-num {
+  min-width:36px; height:36px;
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Fira Code',monospace; font-size:12px; font-weight:600;
+}
+.sec-title { font-size:22px; font-weight:700; letter-spacing:-.3px; }
+.sec-emoji { font-size:22px; }
+
+/* Colour theming helpers */
+.c-yellow .sec-num { background:rgba(255,212,59,.12); color:var(--py-yellow); }
+.c-yellow .sec-title { color:var(--py-yellow); }
+.c-blue .sec-num { background:rgba(75,139,190,.12); color:var(--py-blue); }
+.c-blue .sec-title { color:var(--py-blue); }
+.c-green .sec-num { background:rgba(74,222,128,.12); color:var(--green); }
+.c-green .sec-title { color:var(--green); }
+.c-pink .sec-num { background:rgba(244,114,182,.12); color:var(--pink); }
+.c-pink .sec-title { color:var(--pink); }
+.c-purple .sec-num { background:rgba(167,139,250,.12); color:var(--purple); }
+.c-purple .sec-title { color:var(--purple); }
+.c-orange .sec-num { background:rgba(251,146,60,.12); color:var(--orange); }
+.c-orange .sec-title { color:var(--orange); }
+.c-cyan .sec-num { background:rgba(34,211,238,.12); color:var(--cyan); }
+.c-cyan .sec-title { color:var(--cyan); }
+.c-red .sec-num { background:rgba(248,113,113,.12); color:var(--red); }
+.c-red .sec-title { color:var(--red); }
+
+/* ─── CARD ─── */
+.card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px 20px; margin-bottom:14px; }
+.card p+p { margin-top:8px; }
+.card-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin-bottom:10px; }
+
+/* ─── CODE BLOCK ─── */
+.cb { background:var(--code-bg); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin:12px 0; }
+.cb-top { display:flex; align-items:center; gap:7px; padding:8px 14px; background:rgba(255,255,255,.025); border-bottom:1px solid var(--border); }
+.dot { width:10px;height:10px;border-radius:50%; }
+.dr{background:#ff5f56}.dy{background:#ffbd2e}.dg{background:#27c93f}
+.cb-file { font-size:11px; color:var(--muted); margin-left:auto; font-family:'Fira Code',monospace; }
+pre { padding:16px; overflow-x:auto; font-family:'Fira Code',monospace; font-size:13px; line-height:1.9; tab-size:4; }
+/* Syntax highlight */
+.kw{color:#c792ea} .fn{color:#82aaff} .st{color:#c3e88d} .nm{color:#f78c6c}
+.cm{color:#3d4f5c;font-style:italic} .op{color:#89ddff} .cl{color:var(--py-yellow)}
+.bi{color:var(--pink)} .dec{color:var(--orange)} .err{color:var(--red)}
+
+/* ─── OUTPUT ─── */
+.out { background:rgba(74,222,128,.04); border:1px solid rgba(74,222,128,.15); border-radius:8px; padding:12px 16px; font-family:'Fira Code',monospace; font-size:13px; color:var(--green); margin-top:-4px; }
+.out-lbl { font-size:11px; color:rgba(74,222,128,.5); font-family:'Outfit',sans-serif; margin-bottom:4px; }
+
+/* ─── INFO BOXES ─── */
+.box { border-radius:10px; padding:13px 16px; margin:12px 0; font-size:14px; display:flex; gap:10px; align-items:flex-start; }
+.box .ico { font-size:17px; flex-shrink:0; margin-top:2px; }
+.tip  { background:rgba(74,222,128,.06); border:1px solid rgba(74,222,128,.2); }
+.note { background:rgba(75,139,190,.06); border:1px solid rgba(75,139,190,.2); }
+.warn { background:rgba(255,212,59,.06); border:1px solid rgba(255,212,59,.2); }
+.danger { background:rgba(248,113,113,.06); border:1px solid rgba(248,113,113,.2); }
+
+/* ─── TABLE ─── */
+.tbl { width:100%; border-collapse:collapse; font-size:14px; margin:10px 0; }
+.tbl th { background:rgba(255,255,255,.04); padding:9px 13px; text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); border-bottom:1px solid var(--border); }
+.tbl td { padding:9px 13px; border-bottom:1px solid rgba(255,255,255,.04); vertical-align:top; }
+.tbl tr:last-child td { border-bottom:none; }
+.tbl td code,.tbl th code { font-family:'Fira Code',monospace; font-size:12px; background:rgba(255,255,255,.07); padding:2px 6px; border-radius:4px; color:var(--py-yellow); }
+
+/* ─── GRID ─── */
+.g2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.g3 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+@media(max-width:600px) { .g2,.g3 { grid-template-columns:1fr; } }
+
+/* ─── INLINE CODE ─── */
+ic { font-family:'Fira Code',monospace; font-size:12.5px; background:rgba(255,212,59,.09); color:var(--py-yellow); padding:1px 6px; border-radius:4px; }
+
+/* ─── DIVIDER ─── */
+hr { border:none; border-top:1px solid var(--border); margin:8px 0; }
+
+/* ─── FOOTER ─── */
+footer { text-align:center; padding:32px; color:var(--muted); font-size:13px; border-top:1px solid var(--border); }
+footer b { color:var(--py-yellow); }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-snake">🐍</span>
+  <h1><span class="grad-text">Python – Zero to Advanced</span></h1>
+  <p class="hero-sub">Poora Python ek jagah — Simple Hindi-English mein, Examples ke saath</p>
+  <div class="badges">
+    <span class="badge badge-b">🟢 Beginner</span>
+    <span class="badge badge-i">🟠 Intermediate</span>
+    <span class="badge badge-a">🟣 Advanced</span>
+  </div>
+</div>
+
+<!-- TOC NAV -->
+<nav class="toc">
+  <div class="toc-inner">
+    <a href="#s1">🐍 Intro</a>
+    <a href="#s2">📦 Variables</a>
+    <a href="#s3">🗂 Data Types</a>
+    <a href="#s4">➕ Operators</a>
+    <a href="#s5">⌨️ I/O</a>
+    <a href="#s6">🔀 Conditions</a>
+    <a href="#s7">🔁 Loops</a>
+    <a href="#s8">⚙️ Functions</a>
+    <a href="#s9">📋 Lists</a>
+    <a href="#s10">🔒 Tuples</a>
+    <a href="#s11">📖 Dict</a>
+    <a href="#s12">🔣 Sets</a>
+    <a href="#s13">💬 Strings</a>
+    <a href="#s14">🏗 OOP</a>
+    <a href="#s15">🧬 Inheritance</a>
+    <a href="#s16">💥 Exceptions</a>
+    <a href="#s17">📁 File I/O</a>
+    <a href="#s18">📦 Modules</a>
+    <a href="#s19">🧩 Decorators</a>
+    <a href="#s20">⚡ Generators</a>
+    <a href="#s21">🧵 Comprehensions</a>
+    <a href="#s22">🗃 Collections</a>
+    <a href="#s23">🔗 Itertools</a>
+    <a href="#s24">🧪 Testing</a>
+    <a href="#s25">🌐 APIs</a>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- ═══════════════════════════ BEGINNER ═══════════════════════════ -->
+<div class="level-banner level-beginner"><span class="level-dot"></span> BEGINNER LEVEL — Shuruat yahan se</div>
+
+<!-- S1: INTRO -->
+<div class="section c-yellow" id="s1">
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <div class="sec-title">Python kya hai?</div>
+    <span class="sec-emoji">🐍</span>
+  </div>
+  <div class="card">
+    <p>Python ek <strong>high-level, general-purpose programming language</strong> hai jo 1991 mein <strong>Guido van Rossum</strong> ne banai. Iska syntax English jaisa clean hota hai isliye beginners ke liye best choice hai.</p>
+    <br>
+    <div class="g2">
+      <div>
+        <div class="card-label">✅ Kyun sikhein?</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px">
+          <li>🟡 Bahut simple syntax</li>
+          <li>🟡 Job mein highest demand</li>
+          <li>🟡 AI, Web, Data — sab mein use</li>
+          <li>🟡 Badi community, free resources</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card-label">🚀 Kahan use hoti hai?</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px">
+          <li>🔵 Web Dev — Django, Flask</li>
+          <li>🔵 AI / ML — TensorFlow, PyTorch</li>
+          <li>🔵 Data Science — Pandas, NumPy</li>
+          <li>🔵 Automation, Scripting, Games</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">hello.py</span></div>
+    <pre><span class="cm"># Pehla Python program</span>
+<span class="fn">print</span>(<span class="st">"Hello, World! 🌍"</span>)
+<span class="fn">print</span>(<span class="st">"Python mein welcome hai!"</span>)</pre>
+  </div>
+  <div class="out"><div class="out-lbl">▶ Output</div>Hello, World! 🌍<br>Python mein welcome hai!</div>
+  <div class="box tip"><span class="ico">💡</span><span>Python install karo: <strong>python.org</strong> se download karo ya online: <strong>replit.com</strong> ya <strong>Google Colab</strong> pe code karo — kuch bhi install ki zaroorat nahi!</span></div>
+</div>
+
+<!-- S2: VARIABLES -->
+<div class="section c-blue" id="s2">
+  <div class="sec-head"><div class="sec-num">02</div><div class="sec-title">Variables aur Constants</div><span class="sec-emoji">📦</span></div>
+  <div class="card">
+    <p>Variable ek <strong>naam diya hua container</strong> hai jisme data store hota hai. Python mein type declare karna nahi padta — yeh <strong>dynamically typed</strong> language hai.</p>
+  </div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">variables.py</span></div>
+    <pre><span class="cm"># Variable banana (type likhna nahi padta)</span>
+naam    = <span class="st">"Sachin"</span>     <span class="cm"># str</span>
+umar    = <span class="nm">20</span>           <span class="cm"># int</span>
+height  = <span class="nm">5.9</span>          <span class="cm"># float</span>
+student = <span class="kw">True</span>         <span class="cm"># bool</span>
+nothing = <span class="kw">None</span>         <span class="cm"># NoneType</span>
+
+<span class="cm"># Multiple assignment ek line mein</span>
+a, b, c = <span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>
+
+<span class="cm"># Ek value multiple variables mein</span>
+x = y = z = <span class="nm">0</span>
+
+<span class="cm"># Value swap — Python ka magic</span>
+a, b = b, a
+
+<span class="cm"># Type dekhna</span>
+<span class="fn">print</span>(<span class="bi">type</span>(naam))      <span class="cm"># &lt;class 'str'&gt;</span>
+<span class="fn">print</span>(<span class="bi">type</span>(umar))      <span class="cm"># &lt;class 'int'&gt;</span>
+
+<span class="cm"># Constants (Python mein sirf convention hai, CAPS mein likhte hain)</span>
+PI       = <span class="nm">3.14159</span>
+MAX_SIZE = <span class="nm">100</span></pre>
+  </div>
+  <div class="box warn"><span class="ico">⚠️</span><span><strong>Naming Rules:</strong> Letter ya underscore se shuru ho | Spaces nahi | Case-sensitive | Reserved words nahi (<ic>if, for, class</ic> etc.)</span></div>
+</div>
+
+<!-- S3: DATA TYPES -->
+<div class="section c-green" id="s3">
+  <div class="sec-head"><div class="sec-num">03</div><div class="sec-title">Data Types</div><span class="sec-emoji">🗂️</span></div>
+  <div class="card">
+    <table class="tbl">
+      <tr><th>Type</th><th>Example</th><th>Matlab</th><th>Mutable?</th></tr>
+      <tr><td><code>int</code></td><td><code>10, -5, 0</code></td><td>Poore numbers</td><td>❌ No</td></tr>
+      <tr><td><code>float</code></td><td><code>3.14, -2.5</code></td><td>Decimal numbers</td><td>❌ No</td></tr>
+      <tr><td><code>complex</code></td><td><code>2+3j</code></td><td>Complex numbers</td><td>❌ No</td></tr>
+      <tr><td><code>str</code></td><td><code>"Hello"</code></td><td>Text</td><td>❌ No</td></tr>
+      <tr><td><code>bool</code></td><td><code>True, False</code></td><td>Haan / Na</td><td>❌ No</td></tr>
+      <tr><td><code>list</code></td><td><code>[1,2,3]</code></td><td>Ordered, changeable</td><td>✅ Yes</td></tr>
+      <tr><td><code>tuple</code></td><td><code>(1,2,3)</code></td><td>Ordered, fixed</td><td>❌ No</td></tr>
+      <tr><td><code>dict</code></td><td><code>{"k":"v"}</code></td><td>Key-value pairs</td><td>✅ Yes</td></tr>
+      <tr><td><code>set</code></td><td><code>{1,2,3}</code></td><td>Unique values</td><td>✅ Yes</td></tr>
+      <tr><td><code>NoneType</code></td><td><code>None</code></td><td>Koi value nahi</td><td>❌ No</td></tr>
+    </table>
+  </div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">type_conversion.py</span></div>
+    <pre><span class="cm"># Type Conversion (Type Casting)</span>
+<span class="bi">int</span>(<span class="st">"42"</span>)       <span class="cm"># → 42</span>
+<span class="bi">float</span>(<span class="st">"3.14"</span>)  <span class="cm"># → 3.14</span>
+<span class="bi">str</span>(<span class="nm">100</span>)        <span class="cm"># → "100"</span>
+<span class="bi">bool</span>(<span class="nm">0</span>)         <span class="cm"># → False  (0, "", [], None = False)</span>
+<span class="bi">bool</span>(<span class="nm">42</span>)        <span class="cm"># → True   (baaki sab True)</span>
+<span class="bi">list</span>(<span class="st">"abc"</span>)    <span class="cm"># → ['a', 'b', 'c']</span>
+<span class="bi">tuple</span>([<span class="nm">1</span>,<span class="nm">2</span>])   <span class="cm"># → (1, 2)</span>
+<span class="bi">set</span>([<span class="nm">1</span>,<span class="nm">1</span>,<span class="nm">2</span>])  <span class="cm"># → {1, 2}  (duplicates hat jaate hain)</span></pre>
+  </div>
+</div>
+
+<!-- S4: OPERATORS -->
+<div class="section c-pink" id="s4">
+  <div class="sec-head"><div class="sec-num">04</div><div class="sec-title">Operators</div><span class="sec-emoji">➕</span></div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-label">Arithmetic</div>
+      <table class="tbl">
+        <tr><th>Op</th><th>Kaam</th><th>Example</th></tr>
+        <tr><td><code>+</code></td><td>Jod</td><td><code>5+3=8</code></td></tr>
+        <tr><td><code>-</code></td><td>Ghatao</td><td><code>5-3=2</code></td></tr>
+        <tr><td><code>*</code></td><td>Gunah</td><td><code>5*3=15</code></td></tr>
+        <tr><td><code>/</code></td><td>Bhag (float)</td><td><code>7/2=3.5</code></td></tr>
+        <tr><td><code>//</code></td><td>Floor div</td><td><code>7//2=3</code></td></tr>
+        <tr><td><code>%</code></td><td>Remainder</td><td><code>7%2=1</code></td></tr>
+        <tr><td><code>**</code></td><td>Power</td><td><code>2**8=256</code></td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-label">Comparison (Result → bool)</div>
+        <table class="tbl">
+          <tr><td><code>==</code></td><td>Barabar hai?</td></tr>
+          <tr><td><code>!=</code></td><td>Alag hai?</td></tr>
+          <tr><td><code>&gt; &lt;</code></td><td>Bada / Chhota</td></tr>
+          <tr><td><code>&gt;= &lt;=</code></td><td>Bada ya barabar</td></tr>
+        </table>
+      </div>
+      <div class="card" style="margin-top:0">
+        <div class="card-label">Logical</div>
+        <table class="tbl">
+          <tr><td><code>and</code></td><td>Dono true ho</td></tr>
+          <tr><td><code>or</code></td><td>Ek true ho</td></tr>
+          <tr><td><code>not</code></td><td>Ulta karo</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">operators.py</span></div>
+    <pre>x = <span class="nm">15</span>
+<span class="fn">print</span>(x % <span class="nm">2</span> == <span class="nm">0</span>)                  <span class="cm"># False (odd hai)</span>
+<span class="fn">print</span>(x > <span class="nm">10</span> <span class="kw">and</span> x < <span class="nm">20</span>)         <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="kw">not</span> (x == <span class="nm">15</span>))              <span class="cm"># False</span>
+
+<span class="cm"># Assignment shortcuts</span>
+x += <span class="nm">5</span>   <span class="cm"># x = x + 5  → 20</span>
+x -= <span class="nm">3</span>   <span class="cm"># x = x - 3  → 17</span>
+x **= <span class="nm">2</span>  <span class="cm"># x = x ** 2 → 289</span>
+
+<span class="cm"># Identity & Membership</span>
+a = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>]
+<span class="fn">print</span>(<span class="nm">2</span> <span class="kw">in</span> a)        <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="nm">5</span> <span class="kw">not in</span> a)   <span class="cm"># True</span>
+b = a
+<span class="fn">print</span>(a <span class="kw">is</span> b)        <span class="cm"># True (same object)</span></pre>
+  </div>
+</div>
+
+<!-- S5: INPUT OUTPUT -->
+<div class="section c-purple" id="s5">
+  <div class="sec-head"><div class="sec-num">05</div><div class="sec-title">Input / Output</div><span class="sec-emoji">⌨️</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">io.py</span></div>
+    <pre><span class="cm"># Input — hamesha STRING return karta hai</span>
+naam = <span class="bi">input</span>(<span class="st">"Naam likhein: "</span>)
+umar = <span class="bi">int</span>(<span class="bi">input</span>(<span class="st">"Umar likhein: "</span>))
+gpa  = <span class="bi">float</span>(<span class="bi">input</span>(<span class="st">"GPA likhein: "</span>))
+
+<span class="cm"># print() ke tarike</span>
+<span class="fn">print</span>(<span class="st">"Hello"</span>, naam)                    <span class="cm"># comma = space</span>
+<span class="fn">print</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, sep=<span class="st">"-"</span>)          <span class="cm"># A-B-C</span>
+<span class="fn">print</span>(<span class="st">"Loading"</span>, end=<span class="st">"..."</span>)             <span class="cm"># newline nahi</span>
+
+<span class="cm"># ─── f-string (best tarika) ───</span>
+<span class="fn">print</span>(<span class="st">f"Namaste {naam}, Umar: {umar}"</span>)
+
+<span class="cm"># Formatting numbers</span>
+pi = <span class="nm">3.14159265</span>
+<span class="fn">print</span>(<span class="st">f"Pi = {pi:.2f}"</span>)              <span class="cm"># Pi = 3.14</span>
+<span class="fn">print</span>(<span class="st">f"Pi = {pi:.4f}"</span>)              <span class="cm"># Pi = 3.1416</span>
+salary = <span class="nm">150000</span>
+<span class="fn">print</span>(<span class="st">f"Salary: ₹{salary:,}"</span>)        <span class="cm"># ₹1,50,000</span>
+<span class="fn">print</span>(<span class="st">f"{'Center':^20}"</span>)             <span class="cm"># text center mein</span></pre>
+  </div>
+  <div class="box note"><span class="ico">📌</span><span><ic>input()</ic> always string deta hai. Number ke liye <ic>int(input())</ic> karo. Float ke liye <ic>float(input())</ic> karo.</span></div>
+</div>
+
+<!-- S6: CONDITIONS -->
+<div class="section c-orange" id="s6">
+  <div class="sec-head"><div class="sec-num">06</div><div class="sec-title">Conditions — if / elif / else</div><span class="sec-emoji">🔀</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">conditions.py</span></div>
+    <pre><span class="cm"># Basic if-elif-else</span>
+marks = <span class="nm">78</span>
+
+<span class="kw">if</span> marks >= <span class="nm">90</span>:
+    <span class="fn">print</span>(<span class="st">"A Grade 🏆"</span>)
+<span class="kw">elif</span> marks >= <span class="nm">75</span>:
+    <span class="fn">print</span>(<span class="st">"B Grade ✅"</span>)
+<span class="kw">elif</span> marks >= <span class="nm">60</span>:
+    <span class="fn">print</span>(<span class="st">"C Grade 📚"</span>)
+<span class="kw">elif</span> marks >= <span class="nm">40</span>:
+    <span class="fn">print</span>(<span class="st">"D Grade ⚠️"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"Fail ❌"</span>)
+
+<span class="cm"># Ternary (one-liner)</span>
+result = <span class="st">"Pass"</span> <span class="kw">if</span> marks >= <span class="nm">40</span> <span class="kw">else</span> <span class="st">"Fail"</span>
+
+<span class="cm"># Nested if</span>
+age = <span class="nm">20</span>
+has_id = <span class="kw">True</span>
+<span class="kw">if</span> age >= <span class="nm">18</span>:
+    <span class="kw">if</span> has_id:
+        <span class="fn">print</span>(<span class="st">"Entry allowed ✅"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="st">"ID dikhao"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"Nahi aa sakte"</span>)
+
+<span class="cm"># match-case (Python 3.10+) — switch jaisi</span>
+day = <span class="st">"Monday"</span>
+<span class="kw">match</span> day:
+    <span class="kw">case</span> <span class="st">"Monday"</span> | <span class="st">"Tuesday"</span>:
+        <span class="fn">print</span>(<span class="st">"Week ka shuruat 😴"</span>)
+    <span class="kw">case</span> <span class="st">"Friday"</span>:
+        <span class="fn">print</span>(<span class="st">"Friday hai! 🎉"</span>)
+    <span class="kw">case</span> _:
+        <span class="fn">print</span>(<span class="st">"Normal day"</span>)</pre>
+  </div>
+  <div class="box warn"><span class="ico">⚠️</span><span><strong>Indentation zaroori hai!</strong> Python mein <ic>{ }</ic> nahi hoti — 4 spaces ya 1 tab se block define hota hai. Galat indentation = error.</span></div>
+</div>
+
+<!-- S7: LOOPS -->
+<div class="section c-cyan" id="s7">
+  <div class="sec-head"><div class="sec-num">07</div><div class="sec-title">Loops — for / while</div><span class="sec-emoji">🔁</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">for_loop.py</span></div>
+    <pre><span class="cm"># ─── for loop ───</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">5</span>):          <span class="cm"># 0,1,2,3,4</span>
+    <span class="fn">print</span>(i, end=<span class="st">" "</span>)
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">1</span>, <span class="nm">11</span>):      <span class="cm"># 1 to 10</span>
+    <span class="fn">print</span>(i, end=<span class="st">" "</span>)
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">10</span>, <span class="nm">0</span>, -<span class="nm">1</span>): <span class="cm"># 10 to 1 (ulta)</span>
+    <span class="fn">print</span>(i, end=<span class="st">" "</span>)
+
+<span class="cm"># List pe loop</span>
+fruits = [<span class="st">"Apple"</span>, <span class="st">"Mango"</span>, <span class="st">"Banana"</span>]
+<span class="kw">for</span> fruit <span class="kw">in</span> fruits:
+    <span class="fn">print</span>(fruit)
+
+<span class="cm"># Index bhi chahiye? → enumerate</span>
+<span class="kw">for</span> idx, fruit <span class="kw">in</span> <span class="bi">enumerate</span>(fruits, start=<span class="nm">1</span>):
+    <span class="fn">print</span>(<span class="st">f"{idx}. {fruit}"</span>)
+
+<span class="cm"># Do lists ek saath → zip</span>
+names  = [<span class="st">"Ali"</span>, <span class="st">"Sara"</span>, <span class="st">"Raj"</span>]
+scores = [<span class="nm">88</span>, <span class="nm">92</span>, <span class="nm">76</span>]
+<span class="kw">for</span> name, score <span class="kw">in</span> <span class="bi">zip</span>(names, scores):
+    <span class="fn">print</span>(<span class="st">f"{name}: {score}"</span>)</pre>
+  </div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">while_loop.py</span></div>
+    <pre><span class="cm"># ─── while loop ───</span>
+count = <span class="nm">1</span>
+<span class="kw">while</span> count <= <span class="nm">5</span>:
+    <span class="fn">print</span>(count, end=<span class="st">" "</span>)
+    count += <span class="nm">1</span>
+
+<span class="cm"># break — loop band karo</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">10</span>):
+    <span class="kw">if</span> i == <span class="nm">5</span>: <span class="kw">break</span>
+    <span class="fn">print</span>(i, end=<span class="st">" "</span>)    <span class="cm"># 0 1 2 3 4</span>
+
+<span class="cm"># continue — current step skip karo</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">6</span>):
+    <span class="kw">if</span> i % <span class="nm">2</span> == <span class="nm">0</span>: <span class="kw">continue</span>
+    <span class="fn">print</span>(i, end=<span class="st">" "</span>)    <span class="cm"># 1 3 5  (even skip)</span>
+
+<span class="cm"># else with loop (jab loop normally complete ho)</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">3</span>):
+    <span class="fn">print</span>(i)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"Loop complete! ✅"</span>)
+
+<span class="cm"># Nested loops — multiplication table</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">1</span>, <span class="nm">4</span>):
+    <span class="kw">for</span> j <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">1</span>, <span class="nm">4</span>):
+        <span class="fn">print</span>(<span class="st">f"{i}x{j}={i*j}"</span>, end=<span class="st">"  "</span>)
+    <span class="fn">print</span>()</pre>
+  </div>
+</div>
+
+<!-- S8: FUNCTIONS -->
+<div class="section c-yellow" id="s8">
+  <div class="sec-head"><div class="sec-num">08</div><div class="sec-title">Functions</div><span class="sec-emoji">⚙️</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">functions.py</span></div>
+    <pre><span class="cm"># ─── Basic Function ───</span>
+<span class="kw">def</span> <span class="fn">greet</span>():
+    <span class="fn">print</span>(<span class="st">"Namaste! 🙏"</span>)
+
+<span class="cm"># ─── Parameters ───</span>
+<span class="kw">def</span> <span class="fn">add</span>(a, b):
+    <span class="kw">return</span> a + b
+
+<span class="fn">print</span>(add(<span class="nm">5</span>, <span class="nm">3</span>))     <span class="cm"># 8</span>
+
+<span class="cm"># ─── Default Parameter ───</span>
+<span class="kw">def</span> <span class="fn">power</span>(base, exp=<span class="nm">2</span>):
+    <span class="kw">return</span> base ** exp
+
+<span class="fn">print</span>(power(<span class="nm">4</span>))       <span class="cm"># 16  (exp=2 default)</span>
+<span class="fn">print</span>(power(<span class="nm">2</span>, <span class="nm">10</span>))   <span class="cm"># 1024</span>
+
+<span class="cm"># ─── Keyword Arguments ───</span>
+<span class="kw">def</span> <span class="fn">student_info</span>(naam, marks, city=<span class="st">"Delhi"</span>):
+    <span class="fn">print</span>(<span class="st">f"{naam} | {marks} | {city}"</span>)
+
+student_info(marks=<span class="nm">90</span>, naam=<span class="st">"Sara"</span>)
+
+<span class="cm"># ─── *args (variable positional args) ───</span>
+<span class="kw">def</span> <span class="fn">total</span>(*nums):
+    <span class="kw">return</span> <span class="bi">sum</span>(nums)
+
+<span class="fn">print</span>(total(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>))   <span class="cm"># 15</span>
+
+<span class="cm"># ─── **kwargs (variable keyword args) ───</span>
+<span class="kw">def</span> <span class="fn">profile</span>(**info):
+    <span class="kw">for</span> key, val <span class="kw">in</span> info.items():
+        <span class="fn">print</span>(<span class="st">f"{key}: {val}"</span>)
+
+profile(naam=<span class="st">"Ali"</span>, umar=<span class="nm">22</span>, city=<span class="st">"Lahore"</span>)
+
+<span class="cm"># ─── Multiple Return Values ───</span>
+<span class="kw">def</span> <span class="fn">minmax</span>(lst):
+    <span class="kw">return</span> <span class="bi">min</span>(lst), <span class="bi">max</span>(lst)
+
+lo, hi = minmax([<span class="nm">5</span>, <span class="nm">1</span>, <span class="nm">8</span>, <span class="nm">3</span>])
+
+<span class="cm"># ─── Lambda (Anonymous Function) ───</span>
+square  = <span class="kw">lambda</span> x: x ** <span class="nm">2</span>
+add_two = <span class="kw">lambda</span> a, b: a + b
+<span class="fn">print</span>(square(<span class="nm">6</span>))     <span class="cm"># 36</span>
+nums = [<span class="nm">5</span>, <span class="nm">2</span>, <span class="nm">8</span>, <span class="nm">1</span>]
+<span class="fn">print</span>(<span class="bi">sorted</span>(nums, key=<span class="kw">lambda</span> x: -x))  <span class="cm"># [8,5,2,1]</span></pre>
+  </div>
+  <div class="box tip"><span class="ico">💡</span><span><strong>Docstring</strong> — function ke andar pehli line mein description likho: <ic>"""Yeh function kya karta hai"""</ic></span></div>
+</div>
+
+<!-- ═══════════════════════════ INTERMEDIATE ═══════════════════════════ -->
+<div class="level-banner level-intermediate" style="margin-top:48px"><span class="level-dot"></span> INTERMEDIATE LEVEL — Aage badho</div>
+
+<!-- S9: LISTS -->
+<div class="section c-green" id="s9">
+  <div class="sec-head"><div class="sec-num">09</div><div class="sec-title">Lists — Deep Dive</div><span class="sec-emoji">📋</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">lists.py</span></div>
+    <pre>lst = [<span class="nm">10</span>, <span class="nm">20</span>, <span class="nm">30</span>, <span class="nm">40</span>, <span class="nm">50</span>]
+
+<span class="cm"># ─── Indexing ───</span>
+<span class="fn">print</span>(lst[<span class="nm">0</span>])     <span class="cm"># 10   (pehla)</span>
+<span class="fn">print</span>(lst[-<span class="nm">1</span>])    <span class="cm"># 50   (aakhri)</span>
+<span class="fn">print</span>(lst[-<span class="nm">2</span>])    <span class="cm"># 40   (aakhir se doosra)</span>
+
+<span class="cm"># ─── Slicing [start:stop:step] ───</span>
+<span class="fn">print</span>(lst[<span class="nm">1</span>:<span class="nm">4</span>])       <span class="cm"># [20, 30, 40]</span>
+<span class="fn">print</span>(lst[:<span class="nm">3</span>])        <span class="cm"># [10, 20, 30]</span>
+<span class="fn">print</span>(lst[<span class="nm">2</span>:])        <span class="cm"># [30, 40, 50]</span>
+<span class="fn">print</span>(lst[::-<span class="nm">1</span>])      <span class="cm"># [50,40,30,20,10] (reverse)</span>
+<span class="fn">print</span>(lst[::<span class="nm">2</span>])       <span class="cm"># [10, 30, 50] (step 2)</span>
+
+<span class="cm"># ─── Methods ───</span>
+lst.append(<span class="nm">60</span>)        <span class="cm"># end mein add</span>
+lst.insert(<span class="nm">0</span>, <span class="nm">5</span>)      <span class="cm"># index 0 pe add</span>
+lst.extend([<span class="nm">70</span>,<span class="nm">80</span>])  <span class="cm"># doosri list jodo</span>
+lst.remove(<span class="nm">20</span>)        <span class="cm"># pehla 20 hatao</span>
+lst.pop()              <span class="cm"># aakhri element hatao</span>
+lst.pop(<span class="nm">0</span>)            <span class="cm"># index 0 hatao</span>
+lst.sort()             <span class="cm"># ascending sort</span>
+lst.sort(reverse=<span class="kw">True</span>) <span class="cm"># descending sort</span>
+lst.reverse()          <span class="cm"># ulta karo</span>
+lst.count(<span class="nm">30</span>)         <span class="cm"># count karo</span>
+lst.index(<span class="nm">30</span>)         <span class="cm"># position dhoondo</span>
+lst.clear()            <span class="cm"># sab khaali</span>
+
+<span class="cm"># ─── Useful Functions ───</span>
+<span class="fn">print</span>(<span class="bi">len</span>(lst))        <span class="cm"># length</span>
+<span class="fn">print</span>(<span class="bi">sum</span>(lst))        <span class="cm"># total</span>
+<span class="fn">print</span>(<span class="bi">max</span>(lst))        <span class="cm"># max</span>
+<span class="fn">print</span>(<span class="bi">min</span>(lst))        <span class="cm"># min</span>
+<span class="fn">print</span>(<span class="bi">sorted</span>(lst))     <span class="cm"># naya sorted list</span>
+
+<span class="cm"># ─── List Comprehension ───</span>
+squares  = [x**<span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">1</span>, <span class="nm">6</span>)]
+evens    = [x <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">20</span>) <span class="kw">if</span> x % <span class="nm">2</span> == <span class="nm">0</span>]
+flat     = [x <span class="kw">for</span> row <span class="kw">in</span> [[<span class="nm">1</span>,<span class="nm">2</span>],[<span class="nm">3</span>,<span class="nm">4</span>]] <span class="kw">for</span> x <span class="kw">in</span> row]
+
+<span class="cm"># ─── Nested List (2D) ───</span>
+matrix = [[<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>], [<span class="nm">4</span>,<span class="nm">5</span>,<span class="nm">6</span>], [<span class="nm">7</span>,<span class="nm">8</span>,<span class="nm">9</span>]]
+<span class="fn">print</span>(matrix[<span class="nm">1</span>][<span class="nm">2</span>])   <span class="cm"># 6</span></pre>
+  </div>
+</div>
+
+<!-- S10: TUPLES -->
+<div class="section c-pink" id="s10">
+  <div class="sec-head"><div class="sec-num">10</div><div class="sec-title">Tuples</div><span class="sec-emoji">🔒</span></div>
+  <div class="card"><p>Tuple <strong>immutable list</strong> hai — banane ke baad badal nahi sakti. Parentheses <ic>()</ic> use hote hain. List se thodi <strong>faster</strong> hoti hai.</p></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">tuples.py</span></div>
+    <pre>colors = (<span class="st">"Red"</span>, <span class="st">"Green"</span>, <span class="st">"Blue"</span>)
+point  = (<span class="nm">10</span>, <span class="nm">20</span>)
+single = (<span class="nm">42</span>,)      <span class="cm"># single element tuple — comma zaroori!</span>
+
+<span class="cm"># Indexing, slicing (list jaisa)</span>
+<span class="fn">print</span>(colors[<span class="nm">0</span>])    <span class="cm"># Red</span>
+<span class="fn">print</span>(colors[-<span class="nm">1</span>])   <span class="cm"># Blue</span>
+
+<span class="cm"># Unpacking</span>
+x, y = point
+r, g, b = colors
+
+<span class="cm"># Extended unpacking</span>
+first, *rest = (<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>)
+<span class="fn">print</span>(first)   <span class="cm"># 1</span>
+<span class="fn">print</span>(rest)    <span class="cm"># [2, 3, 4, 5]</span>
+
+<span class="cm"># Named tuple (dictionary + tuple ka combo)</span>
+<span class="kw">from</span> collections <span class="kw">import</span> namedtuple
+Point = namedtuple(<span class="st">'Point'</span>, [<span class="st">'x'</span>, <span class="st">'y'</span>])
+p = Point(<span class="nm">3</span>, <span class="nm">4</span>)
+<span class="fn">print</span>(p.x, p.y)    <span class="cm"># 3 4</span></pre>
+  </div>
+</div>
+
+<!-- S11: DICTIONARY -->
+<div class="section c-purple" id="s11">
+  <div class="sec-head"><div class="sec-num">11</div><div class="sec-title">Dictionary</div><span class="sec-emoji">📖</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">dict.py</span></div>
+    <pre>student = {
+    <span class="st">"naam"</span>  : <span class="st">"Sachin"</span>,
+    <span class="st">"umar"</span>  : <span class="nm">20</span>,
+    <span class="st">"marks"</span> : <span class="nm">88.5</span>,
+    <span class="st">"hobbies"</span>: [<span class="st">"Cricket"</span>, <span class="st">"Coding"</span>]
+}
+
+<span class="cm"># Access</span>
+<span class="fn">print</span>(student[<span class="st">"naam"</span>])              <span class="cm"># Sachin</span>
+<span class="fn">print</span>(student.get(<span class="st">"city"</span>, <span class="st">"N/A"</span>)) <span class="cm"># N/A (key nahi toh default)</span>
+
+<span class="cm"># Add / Update</span>
+student[<span class="st">"city"</span>] = <span class="st">"Delhi"</span>
+student.update({<span class="st">"marks"</span>: <span class="nm">92</span>, <span class="st">"grade"</span>: <span class="st">"A"</span>})
+
+<span class="cm"># Delete</span>
+<span class="kw">del</span> student[<span class="st">"umar"</span>]
+val = student.pop(<span class="st">"city"</span>)
+
+<span class="cm"># Loop</span>
+<span class="kw">for</span> key <span class="kw">in</span> student:               <span class="cm"># keys</span>
+    <span class="fn">print</span>(key)
+<span class="kw">for</span> key, val <span class="kw">in</span> student.items():  <span class="cm"># key-value dono</span>
+    <span class="fn">print</span>(<span class="st">f"{key} → {val}"</span>)
+
+<span class="cm"># Check</span>
+<span class="fn">print</span>(<span class="st">"naam"</span> <span class="kw">in</span> student)    <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="bi">len</span>(student))         <span class="cm"># number of keys</span>
+
+<span class="cm"># Dict Comprehension</span>
+squares = {x: x**<span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">1</span>, <span class="nm">6</span>)}
+<span class="cm"># {1:1, 2:4, 3:9, 4:16, 5:25}</span>
+
+<span class="cm"># Nested Dict</span>
+college = {
+    <span class="st">"CS"</span>: {<span class="st">"students"</span>: <span class="nm">200</span>, <span class="st">"hod"</span>: <span class="st">"Dr. Khan"</span>},
+    <span class="st">"EC"</span>: {<span class="st">"students"</span>: <span class="nm">150</span>, <span class="st">"hod"</span>: <span class="st">"Dr. Sharma"</span>}
+}
+<span class="fn">print</span>(college[<span class="st">"CS"</span>][<span class="st">"hod"</span>])  <span class="cm"># Dr. Khan</span></pre>
+  </div>
+</div>
+
+<!-- S12: SETS -->
+<div class="section c-orange" id="s12">
+  <div class="sec-head"><div class="sec-num">12</div><div class="sec-title">Sets</div><span class="sec-emoji">🔣</span></div>
+  <div class="card"><p>Set mein <strong>duplicate values nahi hoti</strong> aur <strong>order guaranteed nahi</strong>. Mathematical set operations milti hain.</p></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">sets.py</span></div>
+    <pre>a = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>}
+b = {<span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">6</span>}
+
+a.add(<span class="nm">5</span>)        <span class="cm"># add karo</span>
+a.remove(<span class="nm">1</span>)    <span class="cm"># hatao (error if missing)</span>
+a.discard(<span class="nm">99</span>) <span class="cm"># hatao (no error if missing)</span>
+
+<span class="cm"># Set Operations</span>
+<span class="fn">print</span>(a | b)    <span class="cm"># Union        — dono ke sab</span>
+<span class="fn">print</span>(a &amp; b)    <span class="cm"># Intersection — dono mein jo ho</span>
+<span class="fn">print</span>(a - b)    <span class="cm"># Difference   — a mein hai, b mein nahi</span>
+<span class="fn">print</span>(a ^ b)    <span class="cm"># Symmetric    — ek mein hai, dono mein nahi</span>
+
+<span class="cm"># Duplicates hatane ke liye</span>
+lst = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">3</span>, <span class="nm">4</span>]
+unique = <span class="bi">list</span>(<span class="bi">set</span>(lst))   <span class="cm"># [1, 2, 3, 4]</span></pre>
+  </div>
+</div>
+
+<!-- S13: STRINGS -->
+<div class="section c-blue" id="s13">
+  <div class="sec-head"><div class="sec-num">13</div><div class="sec-title">Strings — Deep Dive</div><span class="sec-emoji">💬</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">strings.py</span></div>
+    <pre>s = <span class="st">"  Hello, Python World!  "</span>
+
+<span class="cm"># ─── Basic Methods ───</span>
+<span class="fn">print</span>(s.strip())          <span class="cm"># spaces hatao</span>
+<span class="fn">print</span>(s.upper())          <span class="cm"># UPPER CASE</span>
+<span class="fn">print</span>(s.lower())          <span class="cm"># lower case</span>
+<span class="fn">print</span>(s.title())          <span class="cm"># Title Case</span>
+<span class="fn">print</span>(s.replace(<span class="st">"Python"</span>, <span class="st">"World"</span>))
+
+<span class="cm"># ─── Search ───</span>
+<span class="fn">print</span>(<span class="st">"Python"</span> <span class="kw">in</span> s)     <span class="cm"># True</span>
+<span class="fn">print</span>(s.find(<span class="st">"Python"</span>)) <span class="cm"># index  (-1 if not found)</span>
+<span class="fn">print</span>(s.count(<span class="st">"l"</span>))     <span class="cm"># kitni baar aaya</span>
+<span class="fn">print</span>(s.startswith(<span class="st">"Hello"</span>))
+<span class="fn">print</span>(s.endswith(<span class="st">"!"</span>))
+
+<span class="cm"># ─── Split & Join ───</span>
+words = <span class="st">"apple,mango,banana"</span>.split(<span class="st">","</span>)
+back  = <span class="st">" | "</span>.join(words)
+
+<span class="cm"># ─── Check karna ───</span>
+<span class="st">"123"</span>.isdigit()          <span class="cm"># True</span>
+<span class="st">"abc"</span>.isalpha()          <span class="cm"># True</span>
+<span class="st">"abc123"</span>.isalnum()       <span class="cm"># True</span>
+<span class="st">"  "</span>.isspace()           <span class="cm"># True</span>
+
+<span class="cm"># ─── Slicing ───</span>
+s2 = <span class="st">"Python"</span>
+<span class="fn">print</span>(s2[:<span class="nm">3</span>])     <span class="cm"># Pyt</span>
+<span class="fn">print</span>(s2[::-<span class="nm">1</span>])   <span class="cm"># nohtyP</span>
+<span class="fn">print</span>(s2[<span class="nm">1</span>::<span class="nm">2</span>])   <span class="cm"># yhn</span>
+
+<span class="cm"># ─── Multiline String ───</span>
+msg = <span class="st">"""Yeh
+ek multiline
+string hai"""</span>
+
+<span class="cm"># ─── Escape Characters ───</span>
+<span class="fn">print</span>(<span class="st">"Line1\nLine2"</span>)   <span class="cm"># newline</span>
+<span class="fn">print</span>(<span class="st">"Tab\there"</span>)      <span class="cm"># tab</span>
+<span class="fn">print</span>(<span class="st">"Say \"Hello\""</span>)  <span class="cm"># quotes</span>
+<span class="fn">print</span>(<span class="st">r"C:\new\file"</span>)   <span class="cm"># raw string</span></pre>
+  </div>
+</div>
+
+<!-- S14: OOP -->
+<div class="section c-green" id="s14">
+  <div class="sec-head"><div class="sec-num">14</div><div class="sec-title">OOP — Classes & Objects</div><span class="sec-emoji">🏗️</span></div>
+  <div class="card"><p><strong>Class</strong> ek blueprint hai. <strong>Object</strong> us blueprint ki real copy hai. OOP se hum real-world cheezein code mein model karte hain.</p></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">oop.py</span></div>
+    <pre><span class="kw">class</span> <span class="cl">BankAccount</span>:
+    <span class="cm"># Class variable (sab objects ke liye ek hi)</span>
+    bank_name = <span class="st">"Python Bank"</span>
+
+    <span class="cm"># Constructor</span>
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, owner, balance=<span class="nm">0</span>):
+        <span class="kw">self</span>.owner   = owner      <span class="cm"># instance variable</span>
+        <span class="kw">self</span>.balance = balance
+
+    <span class="cm"># Instance Methods</span>
+    <span class="kw">def</span> <span class="fn">deposit</span>(<span class="kw">self</span>, amount):
+        <span class="kw">self</span>.balance += amount
+        <span class="fn">print</span>(<span class="st">f"✅ ₹{amount} deposit | Balance: ₹{self.balance}"</span>)
+
+    <span class="kw">def</span> <span class="fn">withdraw</span>(<span class="kw">self</span>, amount):
+        <span class="kw">if</span> amount > <span class="kw">self</span>.balance:
+            <span class="fn">print</span>(<span class="st">"❌ Insufficient balance!"</span>)
+        <span class="kw">else</span>:
+            <span class="kw">self</span>.balance -= amount
+            <span class="fn">print</span>(<span class="st">f"✅ ₹{amount} withdrawn | Balance: ₹{self.balance}"</span>)
+
+    <span class="cm"># String representation</span>
+    <span class="kw">def</span> <span class="fn">__str__</span>(<span class="kw">self</span>):
+        <span class="kw">return</span> <span class="st">f"Account[{self.owner}] = ₹{self.balance}"</span>
+
+    <span class="cm"># Static method (self nahi chahiye)</span>
+    <span class="dec">@staticmethod</span>
+    <span class="kw">def</span> <span class="fn">interest_rate</span>():
+        <span class="kw">return</span> <span class="nm">4.5</span>
+
+    <span class="cm"># Class method</span>
+    <span class="dec">@classmethod</span>
+    <span class="kw">def</span> <span class="fn">bank_info</span>(cls):
+        <span class="fn">print</span>(<span class="st">f"Bank: {cls.bank_name}"</span>)
+
+
+<span class="cm"># Objects banana</span>
+acc1 = <span class="cl">BankAccount</span>(<span class="st">"Sachin"</span>, <span class="nm">5000</span>)
+acc2 = <span class="cl">BankAccount</span>(<span class="st">"Priya"</span>)
+
+acc1.deposit(<span class="nm">2000</span>)
+acc1.withdraw(<span class="nm">1000</span>)
+<span class="fn">print</span>(acc1)              <span class="cm"># Account[Sachin] = ₹6000</span>
+
+<span class="cl">BankAccount</span>.bank_info()
+<span class="fn">print</span>(<span class="cl">BankAccount</span>.interest_rate())</pre>
+  </div>
+</div>
+
+<!-- S15: INHERITANCE -->
+<div class="section c-yellow" id="s15">
+  <div class="sec-head"><div class="sec-num">15</div><div class="sec-title">Inheritance & Polymorphism</div><span class="sec-emoji">🧬</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">inheritance.py</span></div>
+    <pre><span class="cm"># ─── Parent Class ───</span>
+<span class="kw">class</span> <span class="cl">Animal</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, naam):
+        <span class="kw">self</span>.naam = naam
+
+    <span class="kw">def</span> <span class="fn">bolna</span>(<span class="kw">self</span>):
+        <span class="kw">return</span> <span class="st">"..."</span>
+
+    <span class="kw">def</span> <span class="fn">info</span>(<span class="kw">self</span>):
+        <span class="fn">print</span>(<span class="st">f"{self.naam} kehta hai: {self.bolna()}"</span>)
+
+<span class="cm"># ─── Child Classes ───</span>
+<span class="kw">class</span> <span class="cl">Dog</span>(<span class="cl">Animal</span>):
+    <span class="kw">def</span> <span class="fn">bolna</span>(<span class="kw">self</span>):       <span class="cm"># Method Override</span>
+        <span class="kw">return</span> <span class="st">"Woof! 🐕"</span>
+
+<span class="kw">class</span> <span class="cl">Cat</span>(<span class="cl">Animal</span>):
+    <span class="kw">def</span> <span class="fn">bolna</span>(<span class="kw">self</span>):
+        <span class="kw">return</span> <span class="st">"Meow! 🐱"</span>
+
+<span class="kw">class</span> <span class="cl">GuideDog</span>(<span class="cl">Dog</span>):        <span class="cm"># Multi-level inheritance</span>
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, naam, id_num):
+        <span class="bi">super</span>().__init__(naam)   <span class="cm"># Parent ka __init__ call karo</span>
+        <span class="kw">self</span>.id_num = id_num
+
+    <span class="kw">def</span> <span class="fn">guide</span>(<span class="kw">self</span>):
+        <span class="fn">print</span>(<span class="st">f"{self.naam} (ID:{self.id_num}) is guiding 🦮"</span>)
+
+<span class="cm"># ─── Polymorphism ───</span>
+animals = [<span class="cl">Dog</span>(<span class="st">"Tommy"</span>), <span class="cl">Cat</span>(<span class="st">"Kitty"</span>), <span class="cl">Dog</span>(<span class="st">"Bruno"</span>)]
+<span class="kw">for</span> animal <span class="kw">in</span> animals:
+    animal.info()     <span class="cm"># har ek apne tarike se bolega</span>
+
+<span class="cm"># ─── isinstance / issubclass ───</span>
+<span class="fn">print</span>(<span class="bi">isinstance</span>(<span class="cl">Dog</span>(<span class="st">"x"</span>), <span class="cl">Animal</span>))   <span class="cm"># True</span>
+<span class="fn">print</span>(<span class="bi">issubclass</span>(<span class="cl">Dog</span>, <span class="cl">Animal</span>))        <span class="cm"># True</span>
+
+<span class="cm"># ─── Abstract Class ───</span>
+<span class="kw">from</span> abc <span class="kw">import</span> ABC, abstractmethod
+<span class="kw">class</span> <span class="cl">Shape</span>(ABC):
+    <span class="dec">@abstractmethod</span>
+    <span class="kw">def</span> <span class="fn">area</span>(<span class="kw">self</span>): <span class="kw">pass</span>
+
+<span class="kw">class</span> <span class="cl">Circle</span>(<span class="cl">Shape</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, r): <span class="kw">self</span>.r = r
+    <span class="kw">def</span> <span class="fn">area</span>(<span class="kw">self</span>): <span class="kw">return</span> <span class="nm">3.14</span> * <span class="kw">self</span>.r ** <span class="nm">2</span></pre>
+  </div>
+</div>
+
+<!-- S16: EXCEPTIONS -->
+<div class="section c-red" id="s16">
+  <div class="sec-head"><div class="sec-num">16</div><div class="sec-title">Exception Handling</div><span class="sec-emoji">💥</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">exceptions.py</span></div>
+    <pre><span class="cm"># ─── try / except ───</span>
+<span class="kw">try</span>:
+    num = <span class="bi">int</span>(<span class="bi">input</span>(<span class="st">"Number likhein: "</span>))
+    result = <span class="nm">100</span> / num
+    <span class="fn">print</span>(<span class="st">f"Result: {result}"</span>)
+
+<span class="kw">except</span> <span class="bi">ValueError</span>:
+    <span class="fn">print</span>(<span class="st">"❌ Sirf numbers likhein!"</span>)
+<span class="kw">except</span> <span class="bi">ZeroDivisionError</span>:
+    <span class="fn">print</span>(<span class="st">"❌ Zero se divide nahi kar sakte!"</span>)
+<span class="kw">except</span> <span class="bi">Exception</span> <span class="kw">as</span> e:
+    <span class="fn">print</span>(<span class="st">f"❌ Koi error: {e}"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">"✅ Koi error nahi!"</span>)
+<span class="kw">finally</span>:
+    <span class="fn">print</span>(<span class="st">"Yeh hamesha chalega 🔁"</span>)
+
+<span class="cm"># ─── Common Exceptions ───</span>
+<span class="cm"># ValueError      — galat type input</span>
+<span class="cm"># TypeError       — wrong data type</span>
+<span class="cm"># IndexError      — list index out of range</span>
+<span class="cm"># KeyError        — dict mein key nahi</span>
+<span class="cm"># FileNotFoundError — file nahi mili</span>
+<span class="cm"># ZeroDivisionError — zero se divide</span>
+<span class="cm"># AttributeError  — attribute nahi mila</span>
+
+<span class="cm"># ─── Custom Exception ───</span>
+<span class="kw">class</span> <span class="cl">AgeError</span>(<span class="bi">Exception</span>):
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, umar):
+        <span class="bi">super</span>().__init__(<span class="st">f"Galat umar: {umar}. 0-150 ke beech honi chahiye."</span>)
+
+<span class="kw">def</span> <span class="fn">set_age</span>(age):
+    <span class="kw">if</span> age < <span class="nm">0</span> <span class="kw">or</span> age > <span class="nm">150</span>:
+        <span class="kw">raise</span> <span class="cl">AgeError</span>(age)
+    <span class="fn">print</span>(<span class="st">f"Age set: {age}"</span>)
+
+<span class="kw">try</span>:
+    set_age(<span class="nm">200</span>)
+<span class="kw">except</span> <span class="cl">AgeError</span> <span class="kw">as</span> e:
+    <span class="fn">print</span>(<span class="st">f"Error: {e}"</span>)</pre>
+  </div>
+</div>
+
+<!-- S17: FILE I/O -->
+<div class="section c-cyan" id="s17">
+  <div class="sec-head"><div class="sec-num">17</div><div class="sec-title">File Input / Output</div><span class="sec-emoji">📁</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">file_io.py</span></div>
+    <pre><span class="cm"># ─── Write karna ───</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"data.txt"</span>, <span class="st">"w"</span>) <span class="kw">as</span> f:
+    f.write(<span class="st">"Pehli line\n"</span>)
+    f.write(<span class="st">"Doosri line\n"</span>)
+
+<span class="cm"># ─── Read karna ───</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"data.txt"</span>, <span class="st">"r"</span>) <span class="kw">as</span> f:
+    content = f.read()         <span class="cm"># poora file</span>
+    f.seek(<span class="nm">0</span>)
+    lines   = f.readlines()   <span class="cm"># list of lines</span>
+    f.seek(<span class="nm">0</span>)
+    line1   = f.readline()    <span class="cm"># ek line</span>
+
+<span class="cm"># ─── Append karna ───</span>
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"data.txt"</span>, <span class="st">"a"</span>) <span class="kw">as</span> f:
+    f.write(<span class="st">"Teesri line add hui\n"</span>)
+
+<span class="cm"># ─── File modes ───</span>
+<span class="cm"># "r"  → Read only (default)</span>
+<span class="cm"># "w"  → Write (overwrite)</span>
+<span class="cm"># "a"  → Append (jod do)</span>
+<span class="cm"># "x"  → Create (already hai toh error)</span>
+<span class="cm"># "rb" → Read binary (images etc.)</span>
+
+<span class="cm"># ─── JSON file ───</span>
+<span class="kw">import</span> json
+
+data = {<span class="st">"naam"</span>: <span class="st">"Sachin"</span>, <span class="st">"marks"</span>: <span class="nm">90</span>}
+
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"student.json"</span>, <span class="st">"w"</span>) <span class="kw">as</span> f:
+    json.dump(data, f, indent=<span class="nm">4</span>)
+
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"student.json"</span>, <span class="st">"r"</span>) <span class="kw">as</span> f:
+    loaded = json.load(f)
+    <span class="fn">print</span>(loaded[<span class="st">"naam"</span>])   <span class="cm"># Sachin</span>
+
+<span class="cm"># ─── CSV file ───</span>
+<span class="kw">import</span> csv
+<span class="kw">with</span> <span class="bi">open</span>(<span class="st">"marks.csv"</span>, <span class="st">"w"</span>, newline=<span class="st">""</span>) <span class="kw">as</span> f:
+    writer = csv.writer(f)
+    writer.writerow([<span class="st">"Naam"</span>, <span class="st">"Marks"</span>])
+    writer.writerow([<span class="st">"Sachin"</span>, <span class="nm">90</span>])</pre>
+  </div>
+</div>
+
+<!-- S18: MODULES -->
+<div class="section c-orange" id="s18">
+  <div class="sec-head"><div class="sec-num">18</div><div class="sec-title">Modules & Packages</div><span class="sec-emoji">📦</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">modules.py</span></div>
+    <pre><span class="cm"># ─── Import karna ───</span>
+<span class="kw">import</span> math
+<span class="kw">import</span> random
+<span class="kw">import</span> datetime
+<span class="kw">from</span> os <span class="kw">import</span> getcwd, listdir
+<span class="kw">from</span> math <span class="kw">import</span> pi, sqrt, factorial
+
+<span class="cm"># ─── math module ───</span>
+<span class="fn">print</span>(math.pi)            <span class="cm"># 3.14159...</span>
+<span class="fn">print</span>(math.sqrt(<span class="nm">144</span>))    <span class="cm"># 12.0</span>
+<span class="fn">print</span>(math.floor(<span class="nm">3.7</span>))   <span class="cm"># 3</span>
+<span class="fn">print</span>(math.ceil(<span class="nm">3.1</span>))    <span class="cm"># 4</span>
+<span class="fn">print</span>(math.factorial(<span class="nm">5</span>)) <span class="cm"># 120</span>
+<span class="fn">print</span>(math.log(<span class="nm">100</span>, <span class="nm">10</span>)) <span class="cm"># 2.0</span>
+
+<span class="cm"># ─── random module ───</span>
+<span class="fn">print</span>(random.random())              <span class="cm"># 0.0 to 1.0</span>
+<span class="fn">print</span>(random.randint(<span class="nm">1</span>, <span class="nm">100</span>))      <span class="cm"># 1-100</span>
+<span class="fn">print</span>(random.choice([<span class="st">"a"</span>,<span class="st">"b"</span>,<span class="st">"c"</span>])) <span class="cm"># random item</span>
+lst = [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>,<span class="nm">4</span>,<span class="nm">5</span>]
+random.shuffle(lst)                  <span class="cm"># shuffle in-place</span>
+<span class="fn">print</span>(random.sample(lst, <span class="nm">3</span>))       <span class="cm"># 3 unique items</span>
+
+<span class="cm"># ─── datetime ───</span>
+now = datetime.datetime.now()
+<span class="fn">print</span>(now.strftime(<span class="st">"%d/%m/%Y %H:%M"</span>))  <span class="cm"># 28/05/2026 10:30</span>
+
+<span class="cm"># ─── os module ───</span>
+<span class="kw">import</span> os
+<span class="fn">print</span>(os.getcwd())       <span class="cm"># current directory</span>
+<span class="fn">print</span>(os.listdir())      <span class="cm"># files list</span>
+os.mkdir(<span class="st">"new_folder"</span>)  <span class="cm"># folder banao</span>
+
+<span class="cm"># ─── sys module ───</span>
+<span class="kw">import</span> sys
+<span class="fn">print</span>(sys.version)       <span class="cm"># Python version</span>
+
+<span class="cm"># ─── Apna module banana ───</span>
+<span class="cm"># myutils.py file banao:</span>
+<span class="cm"># def add(a,b): return a+b</span>
+<span class="cm"># Phir import karo:</span>
+<span class="cm"># import myutils</span>
+<span class="cm"># print(myutils.add(2, 3))</span></pre>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ ADVANCED ═══════════════════════════ -->
+<div class="level-banner level-advanced" style="margin-top:48px"><span class="level-dot"></span> ADVANCED LEVEL — Pro ban jao 🚀</div>
+
+<!-- S19: DECORATORS -->
+<div class="section c-purple" id="s19">
+  <div class="sec-head"><div class="sec-num">19</div><div class="sec-title">Decorators</div><span class="sec-emoji">🧩</span></div>
+  <div class="card"><p>Decorator ek function hai jo <strong>doosre function ko wrap karta hai</strong> bina uski code badlaye — extra functionality add karna ke liye. <ic>@</ic> symbol se use karte hain.</p></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">decorators.py</span></div>
+    <pre><span class="kw">import</span> time
+
+<span class="cm"># ─── Pehle samjho: functions are objects ───</span>
+<span class="kw">def</span> <span class="fn">hello</span>(): <span class="fn">print</span>(<span class="st">"Hello!"</span>)
+greet = hello          <span class="cm"># function ko variable mein</span>
+greet()                <span class="cm"># Hello!</span>
+
+<span class="cm"># ─── Decorator banana ───</span>
+<span class="kw">def</span> <span class="fn">timer</span>(func):
+    <span class="kw">def</span> <span class="fn">wrapper</span>(*args, **kwargs):
+        start  = time.time()
+        result = func(*args, **kwargs)  <span class="cm"># original function</span>
+        end    = time.time()
+        <span class="fn">print</span>(<span class="st">f"⏱ {func.__name__} ne {end-start:.4f}s liya"</span>)
+        <span class="kw">return</span> result
+    <span class="kw">return</span> wrapper
+
+<span class="dec">@timer</span>                 <span class="cm"># = slow_task = timer(slow_task)</span>
+<span class="kw">def</span> <span class="fn">slow_task</span>():
+    time.sleep(<span class="nm">1</span>)
+    <span class="fn">print</span>(<span class="st">"Task done!"</span>)
+
+slow_task()
+
+<span class="cm"># ─── Login check decorator ───</span>
+<span class="kw">def</span> <span class="fn">login_required</span>(func):
+    <span class="kw">def</span> <span class="fn">wrapper</span>(user, *args, **kwargs):
+        <span class="kw">if</span> <span class="kw">not</span> user.get(<span class="st">"logged_in"</span>):
+            <span class="fn">print</span>(<span class="st">"❌ Pehle login karo!"</span>)
+            <span class="kw">return</span>
+        <span class="kw">return</span> func(user, *args, **kwargs)
+    <span class="kw">return</span> wrapper
+
+<span class="dec">@login_required</span>
+<span class="kw">def</span> <span class="fn">dashboard</span>(user):
+    <span class="fn">print</span>(<span class="st">f"Welcome {user['naam']}!"</span>)
+
+dashboard({<span class="st">"naam"</span>: <span class="st">"Ali"</span>, <span class="st">"logged_in"</span>: <span class="kw">True</span>})
+dashboard({<span class="st">"naam"</span>: <span class="st">"Bob"</span>, <span class="st">"logged_in"</span>: <span class="kw">False</span>})
+
+<span class="cm"># ─── Built-in Decorators ───</span>
+<span class="kw">class</span> <span class="cl">Temp</span>:
+    <span class="dec">@staticmethod</span>
+    <span class="kw">def</span> <span class="fn">celsius_to_f</span>(c): <span class="kw">return</span> c * <span class="nm">9</span>/<span class="nm">5</span> + <span class="nm">32</span>
+
+    <span class="dec">@property</span>           <span class="cm"># getter — method ko variable jaisa</span>
+    <span class="kw">def</span> <span class="fn">value</span>(<span class="kw">self</span>): <span class="kw">return</span> <span class="kw">self</span>._val</pre>
+  </div>
+</div>
+
+<!-- S20: GENERATORS -->
+<div class="section c-cyan" id="s20">
+  <div class="sec-head"><div class="sec-num">20</div><div class="sec-title">Generators & Iterators</div><span class="sec-emoji">⚡</span></div>
+  <div class="card"><p>Generator ek <strong>lazy function</strong> hai — values ek ek karke produce karta hai, sab ek saath nahi. <strong>Memory efficient</strong> hota hai badi data ke liye. <ic>yield</ic> keyword use hota hai.</p></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">generators.py</span></div>
+    <pre><span class="cm"># ─── Normal function vs Generator ───</span>
+<span class="kw">def</span> <span class="fn">normal_range</span>(n):
+    lst = []
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(n): lst.append(i)
+    <span class="kw">return</span> lst     <span class="cm"># sab ek saath memory mein</span>
+
+<span class="kw">def</span> <span class="fn">gen_range</span>(n):
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="bi">range</span>(n):
+        <span class="kw">yield</span> i    <span class="cm"># ek ek karke — bahut kam memory</span>
+
+<span class="kw">for</span> num <span class="kw">in</span> gen_range(<span class="nm">5</span>):
+    <span class="fn">print</span>(num, end=<span class="st">" "</span>)   <span class="cm"># 0 1 2 3 4</span>
+
+<span class="cm"># ─── Fibonacci Generator ───</span>
+<span class="kw">def</span> <span class="fn">fibonacci</span>():
+    a, b = <span class="nm">0</span>, <span class="nm">1</span>
+    <span class="kw">while</span> <span class="kw">True</span>:
+        <span class="kw">yield</span> a
+        a, b = b, a + b
+
+fib = fibonacci()
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">10</span>):
+    <span class="fn">print</span>(<span class="bi">next</span>(fib), end=<span class="st">" "</span>)  <span class="cm"># 0 1 1 2 3 5 8 13 21 34</span>
+
+<span class="cm"># ─── Generator Expression ───</span>
+squares = (x**<span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">1000000</span>))  <span class="cm"># list nahi banai!</span>
+<span class="fn">print</span>(<span class="bi">sum</span>(squares))   <span class="cm"># sum efficiently calculate</span>
+
+<span class="cm"># ─── Custom Iterator ───</span>
+<span class="kw">class</span> <span class="cl">Countdown</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, start):
+        <span class="kw">self</span>.current = start
+
+    <span class="kw">def</span> <span class="fn">__iter__</span>(<span class="kw">self</span>): <span class="kw">return</span> <span class="kw">self</span>
+
+    <span class="kw">def</span> <span class="fn">__next__</span>(<span class="kw">self</span>):
+        <span class="kw">if</span> <span class="kw">self</span>.current <= <span class="nm">0</span>:
+            <span class="kw">raise</span> <span class="bi">StopIteration</span>
+        val = <span class="kw">self</span>.current
+        <span class="kw">self</span>.current -= <span class="nm">1</span>
+        <span class="kw">return</span> val
+
+<span class="kw">for</span> n <span class="kw">in</span> <span class="cl">Countdown</span>(<span class="nm">5</span>):
+    <span class="fn">print</span>(n, end=<span class="st">" "</span>)   <span class="cm"># 5 4 3 2 1</span></pre>
+  </div>
+</div>
+
+<!-- S21: COMPREHENSIONS -->
+<div class="section c-green" id="s21">
+  <div class="sec-head"><div class="sec-num">21</div><div class="sec-title">Advanced Comprehensions</div><span class="sec-emoji">🧵</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">comprehensions.py</span></div>
+    <pre><span class="cm"># ─── List Comprehension ───</span>
+nums   = [x <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">10</span>)]
+evens  = [x <span class="kw">for</span> x <span class="kw">in</span> nums <span class="kw">if</span> x % <span class="nm">2</span> == <span class="nm">0</span>]
+labels = [<span class="st">"Even"</span> <span class="kw">if</span> x%<span class="nm">2</span>==<span class="nm">0</span> <span class="kw">else</span> <span class="st">"Odd"</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">5</span>)]
+flat   = [x <span class="kw">for</span> row <span class="kw">in</span> [[<span class="nm">1</span>,<span class="nm">2</span>],[<span class="nm">3</span>,<span class="nm">4</span>]] <span class="kw">for</span> x <span class="kw">in</span> row]
+
+<span class="cm"># ─── Dict Comprehension ───</span>
+sq_dict = {x: x**<span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> <span class="bi">range</span>(<span class="nm">1</span>, <span class="nm">6</span>)}
+inverted = {v: k <span class="kw">for</span> k, v <span class="kw">in</span> sq_dict.items()}
+
+<span class="cm"># ─── Set Comprehension ───</span>
+unique_sq = {x**<span class="nm">2</span> <span class="kw">for</span> x <span class="kw">in</span> [-<span class="nm">3</span>,-<span class="nm">2</span>,-<span class="nm">1</span>,<span class="nm">0</span>,<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>]}
+<span class="cm"># {0, 1, 4, 9}</span>
+
+<span class="cm"># ─── Walrus Operator := (Python 3.8+) ───</span>
+<span class="cm"># Assign aur use ek hi line mein</span>
+data = [<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">15</span>, <span class="nm">6</span>]
+big  = [y <span class="kw">for</span> x <span class="kw">in</span> data <span class="kw">if</span> (y := x**<span class="nm">2</span>) > <span class="nm">50</span>]
+<span class="fn">print</span>(big)   <span class="cm"># [225, 36] aur [225]</span></pre>
+  </div>
+</div>
+
+<!-- S22: COLLECTIONS -->
+<div class="section c-orange" id="s22">
+  <div class="sec-head"><div class="sec-num">22</div><div class="sec-title">Collections Module</div><span class="sec-emoji">🗃️</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">collections_module.py</span></div>
+    <pre><span class="kw">from</span> collections <span class="kw">import</span> Counter, defaultdict, deque, OrderedDict
+
+<span class="cm"># ─── Counter — count karna ───</span>
+text  = <span class="st">"python programming"</span>
+cnt   = Counter(text)
+<span class="fn">print</span>(cnt.most_common(<span class="nm">3</span>))   <span class="cm"># top 3 chars</span>
+
+votes = [<span class="st">"Ali"</span>, <span class="st">"Sara"</span>, <span class="st">"Ali"</span>, <span class="st">"Raj"</span>, <span class="st">"Ali"</span>, <span class="st">"Sara"</span>]
+vc = Counter(votes)
+<span class="fn">print</span>(vc)          <span class="cm"># Counter({'Ali': 3, 'Sara': 2, 'Raj': 1})</span>
+<span class="fn">print</span>(vc.most_common(<span class="nm">1</span>))  <span class="cm"># [('Ali', 3)]</span>
+
+<span class="cm"># ─── defaultdict — missing key pe default ───</span>
+dd = defaultdict(<span class="bi">list</span>)
+dd[<span class="st">"fruits"</span>].append(<span class="st">"Apple"</span>)   <span class="cm"># KeyError nahi aayega</span>
+dd[<span class="st">"fruits"</span>].append(<span class="st">"Mango"</span>)
+
+grades = defaultdict(<span class="bi">int</span>)
+<span class="kw">for</span> s <span class="kw">in</span> [<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>]:
+    grades[s] += <span class="nm">1</span>
+
+<span class="cm"># ─── deque — fast queue ───</span>
+dq = deque([<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>])
+dq.appendleft(<span class="nm">0</span>)    <span class="cm"># left mein add</span>
+dq.append(<span class="nm">4</span>)        <span class="cm"># right mein add</span>
+dq.popleft()         <span class="cm"># left se hatao</span>
+dq.pop()             <span class="cm"># right se hatao</span>
+dq.rotate(<span class="nm">1</span>)        <span class="cm"># rotate right</span>
+dq_limited = deque(maxlen=<span class="nm">3</span>)  <span class="cm"># sirf 3 items rakh</span>
+
+<span class="cm"># ─── namedtuple ───</span>
+<span class="kw">from</span> collections <span class="kw">import</span> namedtuple
+Student = namedtuple(<span class="st">'Student'</span>, [<span class="st">'naam'</span>, <span class="st">'marks'</span>, <span class="st">'grade'</span>])
+s1 = Student(<span class="st">"Sachin"</span>, <span class="nm">90</span>, <span class="st">"A"</span>)
+<span class="fn">print</span>(s1.naam, s1.marks)   <span class="cm"># name se access</span></pre>
+  </div>
+</div>
+
+<!-- S23: ITERTOOLS -->
+<div class="section c-blue" id="s23">
+  <div class="sec-head"><div class="sec-num">23</div><div class="sec-title">Itertools & Functools</div><span class="sec-emoji">🔗</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">itertools_functools.py</span></div>
+    <pre><span class="kw">import</span> itertools
+<span class="kw">import</span> functools
+
+<span class="cm"># ─── itertools ───</span>
+<span class="cm"># chain — multiple iterables jodo</span>
+result = <span class="bi">list</span>(itertools.chain([<span class="nm">1</span>,<span class="nm">2</span>], [<span class="nm">3</span>,<span class="nm">4</span>], [<span class="nm">5</span>]))
+<span class="cm"># [1, 2, 3, 4, 5]</span>
+
+<span class="cm"># product — Cartesian product</span>
+combos = <span class="bi">list</span>(itertools.product(<span class="st">"AB"</span>, [<span class="nm">1</span>,<span class="nm">2</span>]))
+<span class="cm"># [('A',1),('A',2),('B',1),('B',2)]</span>
+
+<span class="cm"># combinations — choose r items (order matters nahi)</span>
+c = <span class="bi">list</span>(itertools.combinations([<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>], <span class="nm">2</span>))
+<span class="cm"># [(1,2),(1,3),(2,3)]</span>
+
+<span class="cm"># permutations — order matters</span>
+p = <span class="bi">list</span>(itertools.permutations([<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>], <span class="nm">2</span>))
+
+<span class="cm"># groupby — group karo</span>
+data = [(<span class="st">"A"</span>,<span class="nm">1</span>), (<span class="st">"A"</span>,<span class="nm">2</span>), (<span class="st">"B"</span>,<span class="nm">3</span>)]
+<span class="kw">for</span> key, group <span class="kw">in</span> itertools.groupby(data, key=<span class="kw">lambda</span> x: x[<span class="nm">0</span>]):
+    <span class="fn">print</span>(key, <span class="bi">list</span>(group))
+
+<span class="cm"># ─── functools ───</span>
+<span class="cm"># reduce — sab combine karo</span>
+total = functools.reduce(<span class="kw">lambda</span> a,b: a+b, [<span class="nm">1</span>,<span class="nm">2</span>,<span class="nm">3</span>,<span class="nm">4</span>])
+<span class="cm"># 10</span>
+
+<span class="cm"># lru_cache — memoization (slow recursion fast karo)</span>
+<span class="dec">@functools.lru_cache</span>(maxsize=<span class="kw">None</span>)
+<span class="kw">def</span> <span class="fn">fib</span>(n):
+    <span class="kw">if</span> n <= <span class="nm">1</span>: <span class="kw">return</span> n
+    <span class="kw">return</span> fib(n-<span class="nm">1</span>) + fib(n-<span class="nm">2</span>)
+
+<span class="fn">print</span>(fib(<span class="nm">50</span>))   <span class="cm"># bahut fast! (cache ki wajah se)</span>
+
+<span class="cm"># partial — function ke kuch args fix karo</span>
+<span class="kw">from</span> functools <span class="kw">import</span> partial
+power = <span class="kw">lambda</span> base, exp: base ** exp
+square = partial(power, exp=<span class="nm">2</span>)
+cube   = partial(power, exp=<span class="nm">3</span>)
+<span class="fn">print</span>(square(<span class="nm">5</span>), cube(<span class="nm">3</span>))  <span class="cm"># 25  27</span></pre>
+  </div>
+</div>
+
+<!-- S24: TESTING -->
+<div class="section c-red" id="s24">
+  <div class="sec-head"><div class="sec-num">24</div><div class="sec-title">Testing — unittest / pytest</div><span class="sec-emoji">🧪</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">test_example.py</span></div>
+    <pre><span class="kw">import</span> unittest
+
+<span class="cm"># ─── Jo function test karni hai ───</span>
+<span class="kw">def</span> <span class="fn">add</span>(a, b): <span class="kw">return</span> a + b
+<span class="kw">def</span> <span class="fn">divide</span>(a, b):
+    <span class="kw">if</span> b == <span class="nm">0</span>: <span class="kw">raise</span> <span class="bi">ValueError</span>(<span class="st">"Zero se divide nahi"</span>)
+    <span class="kw">return</span> a / b
+
+<span class="cm"># ─── Test class ───</span>
+<span class="kw">class</span> <span class="cl">TestMath</span>(unittest.TestCase):
+
+    <span class="kw">def</span> <span class="fn">test_add_positive</span>(<span class="kw">self</span>):
+        <span class="kw">self</span>.assertEqual(add(<span class="nm">2</span>, <span class="nm">3</span>), <span class="nm">5</span>)
+
+    <span class="kw">def</span> <span class="fn">test_add_negative</span>(<span class="kw">self</span>):
+        <span class="kw">self</span>.assertEqual(add(-<span class="nm">1</span>, -<span class="nm">1</span>), -<span class="nm">2</span>)
+
+    <span class="kw">def</span> <span class="fn">test_divide_normal</span>(<span class="kw">self</span>):
+        <span class="kw">self</span>.assertAlmostEqual(divide(<span class="nm">10</span>, <span class="nm">3</span>), <span class="nm">3.333</span>, places=<span class="nm">2</span>)
+
+    <span class="kw">def</span> <span class="fn">test_divide_by_zero</span>(<span class="kw">self</span>):
+        <span class="kw">with</span> <span class="kw">self</span>.assertRaises(<span class="bi">ValueError</span>):
+            divide(<span class="nm">10</span>, <span class="nm">0</span>)
+
+    <span class="kw">def</span> <span class="fn">test_add_string</span>(<span class="kw">self</span>):
+        <span class="kw">self</span>.assertEqual(add(<span class="st">"Hello"</span>, <span class="st">" World"</span>), <span class="st">"Hello World"</span>)
+
+<span class="kw">if</span> __name__ == <span class="st">"__main__"</span>:
+    unittest.main()
+
+<span class="cm"># ─── pytest (install: pip install pytest) ───</span>
+<span class="cm"># Aur simple! Test file test_.py ya _test.py ho</span>
+<span class="cm"># def test_add():
+#     assert add(2, 3) == 5
+# Command: pytest test_example.py -v</span></pre>
+  </div>
+</div>
+
+<!-- S25: APIs -->
+<div class="section c-pink" id="s25">
+  <div class="sec-head"><div class="sec-num">25</div><div class="sec-title">APIs aur requests Module</div><span class="sec-emoji">🌐</span></div>
+  <div class="cb">
+    <div class="cb-top"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><span class="cb-file">api_calls.py</span></div>
+    <pre><span class="kw">import</span> requests   <span class="cm"># pip install requests</span>
+<span class="kw">import</span> json
+
+<span class="cm"># ─── GET Request ───</span>
+url = <span class="st">"https://api.github.com/users/python"</span>
+response = requests.get(url)
+
+<span class="kw">if</span> response.status_code == <span class="nm">200</span>:
+    data = response.json()
+    <span class="fn">print</span>(<span class="st">f"Name: {data['name']}"</span>)
+    <span class="fn">print</span>(<span class="st">f"Followers: {data['followers']}"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="st">f"Error: {response.status_code}"</span>)
+
+<span class="cm"># ─── POST Request ───</span>
+data = {<span class="st">"title"</span>: <span class="st">"Test Post"</span>, <span class="st">"body"</span>: <span class="st">"Hello World"</span>, <span class="st">"userId"</span>: <span class="nm">1</span>}
+r = requests.post(<span class="st">"https://jsonplaceholder.typicode.com/posts"</span>, json=data)
+<span class="fn">print</span>(r.json())
+
+<span class="cm"># ─── Headers ke saath ───</span>
+headers = {<span class="st">"Authorization"</span>: <span class="st">"Bearer YOUR_TOKEN"</span>}
+r = requests.get(<span class="st">"https://api.example.com/data"</span>, headers=headers)
+
+<span class="cm"># ─── Query Parameters ───</span>
+params = {<span class="st">"q"</span>: <span class="st">"python"</span>, <span class="st">"limit"</span>: <span class="nm">10</span>}
+r = requests.get(<span class="st">"https://api.example.com/search"</span>, params=params)
+
+<span class="cm"># ─── Error handling ke saath ───</span>
+<span class="kw">try</span>:
+    r = requests.get(url, timeout=<span class="nm">5</span>)
+    r.raise_for_status()   <span class="cm"># 4xx/5xx pe exception</span>
+    <span class="fn">print</span>(r.json())
+<span class="kw">except</span> requests.exceptions.Timeout:
+    <span class="fn">print</span>(<span class="st">"Request timeout ho gaya!"</span>)
+<span class="kw">except</span> requests.exceptions.RequestException <span class="kw">as</span> e:
+    <span class="fn">print</span>(<span class="st">f"Error: {e}"</span>)</pre>
+  </div>
+  <div class="box tip"><span class="ico">🚀</span><span><strong>Aage kya sikhein?</strong> Virtual Environments (<ic>venv</ic>), Type Hints, Async/Await (<ic>asyncio</ic>), Dataclasses, Context Managers, Design Patterns, aur Frameworks jaise Django ya FastAPI!</span></div>
+</div>
+
+<!-- QUICK REF -->
+<div style="margin-top:48px; background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px;">
+  <div style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--py-yellow);margin-bottom:16px;">⚡ Quick Cheat Sheet</div>
+  <div class="g3">
+    <div>
+      <div class="card-label">Built-in Functions</div>
+      <table class="tbl">
+        <tr><td><code>print()</code></td><td>Output dikhao</td></tr>
+        <tr><td><code>input()</code></td><td>User se lo</td></tr>
+        <tr><td><code>len()</code></td><td>Size / Length</td></tr>
+        <tr><td><code>type()</code></td><td>Type check</td></tr>
+        <tr><td><code>range()</code></td><td>Number sequence</td></tr>
+        <tr><td><code>int/float/str()</code></td><td>Type convert</td></tr>
+        <tr><td><code>sorted()</code></td><td>Sort karo</td></tr>
+        <tr><td><code>enumerate()</code></td><td>Index + value</td></tr>
+        <tr><td><code>zip()</code></td><td>Lists combine</td></tr>
+        <tr><td><code>map()</code></td><td>Function apply</td></tr>
+        <tr><td><code>filter()</code></td><td>Filter karo</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="card-label">Common Errors</div>
+      <table class="tbl">
+        <tr><td><code>SyntaxError</code></td><td>Code galat likha</td></tr>
+        <tr><td><code>NameError</code></td><td>Variable nahi mila</td></tr>
+        <tr><td><code>TypeError</code></td><td>Galat type</td></tr>
+        <tr><td><code>ValueError</code></td><td>Galat value</td></tr>
+        <tr><td><code>IndexError</code></td><td>Index out of range</td></tr>
+        <tr><td><code>KeyError</code></td><td>Dict key missing</td></tr>
+        <tr><td><code>AttributeError</code></td><td>Method nahi mili</td></tr>
+        <tr><td><code>ImportError</code></td><td>Module nahi mila</td></tr>
+        <tr><td><code>ZeroDivisionError</code></td><td>Zero se divide</td></tr>
+        <tr><td><code>RecursionError</code></td><td>Infinite recursion</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="card-label">Popular Libraries</div>
+      <table class="tbl">
+        <tr><td><code>numpy</code></td><td>Math & Arrays</td></tr>
+        <tr><td><code>pandas</code></td><td>Data Analysis</td></tr>
+        <tr><td><code>matplotlib</code></td><td>Graphs & Charts</td></tr>
+        <tr><td><code>scikit-learn</code></td><td>Machine Learning</td></tr>
+        <tr><td><code>tensorflow</code></td><td>Deep Learning</td></tr>
+        <tr><td><code>flask</code></td><td>Web (simple)</td></tr>
+        <tr><td><code>django</code></td><td>Web (full)</td></tr>
+        <tr><td><code>fastapi</code></td><td>API Development</td></tr>
+        <tr><td><code>requests</code></td><td>HTTP Calls</td></tr>
+        <tr><td><code>pillow</code></td><td>Images</td></tr>
+        <tr><td><code>pytest</code></td><td>Testing</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<footer>
+  🐍 Python Zero to Advanced Notes &nbsp;·&nbsp; <b>25 Topics</b> covered &nbsp;·&nbsp; Beginner → Intermediate → Advanced<br>
+  <span style="margin-top:6px;display:block">Keep coding, keep growing! 🚀</span>
+</footer>
+
+</body>
+</html>
